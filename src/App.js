@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import store from './store';
+import List from './Components/List/List';
 
-class App extends Component {
+export default class App extends React.Component {
+  state = {
+    lists: store.lists,
+    allCards: store.allCards
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+      <main className='App'>
+        <header>
+          <h1>Trelloyes</h1>
+          <div className="App-list">
+            {this.state.lists.map(list => {
+              return < List
+                key={list.id}
+                header={list.header}
+                cards={list.cardIds.map(id => this.state.allCards[id])}
+              />
+            })}
+          </div>
         </header>
-      </div>
+      </main>
     );
   }
 }
-
-export default App;
